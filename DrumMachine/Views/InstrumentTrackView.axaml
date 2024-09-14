@@ -1,0 +1,41 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:models="clr-namespace:DrumMachine.Models"
+             xmlns:converters1="clr-namespace:DrumMachine.Converters"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="50"
+             x:DataType="models:InstrumentTrack"
+             x:Class="DrumMachine.UI.InstrumentTrackView">
+    <UserControl.Resources>
+        <converters1:DecimalToSevenBitNumber x:Key="DecimalToSevenBitNumber" />
+    </UserControl.Resources>
+    <DockPanel>
+        <TextBlock Width="40" Text="{Binding InstrumentTrackName}" DockPanel.Dock="Left" />
+        <NumericUpDown Width="130" Value="{Binding NoteNumber, Converter={StaticResource DecimalToSevenBitNumber}}" DockPanel.Dock="Left"
+                       Minimum="0" Maximum="127"/>
+        <ToggleButton IsChecked="{Binding IsMute}" Width="30">M</ToggleButton>
+        <ItemsControl ItemsSource="{Binding BeatGrid}">
+            <ItemsControl.Styles>
+                <Style Selector="ToggleButton">
+                    <Setter Property="MinHeight" Value="50" />
+                    <Setter Property="MinWidth" Value="50" />
+                </Style>
+                <Style Selector="ToggleButton:checked">
+                    <Setter Property="Background" Value="Red" />
+                </Style>
+            </ItemsControl.Styles>
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Rows="1" HorizontalAlignment="Center" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <ToggleButton IsChecked="{Binding IsOn}" />
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </DockPanel>
+
+</UserControl>

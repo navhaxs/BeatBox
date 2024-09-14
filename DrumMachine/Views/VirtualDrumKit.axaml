@@ -1,0 +1,74 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:drumMachine="clr-namespace:DrumMachine"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:DataType="drumMachine:BeatMachineViewModel"
+             x:Class="DrumMachine.Views.VirtualDrumKit">
+    <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+        <StackPanel Orientation="Horizontal">
+           
+            <Grid Height="400" Width="600" Background="Black">
+                <Grid.Styles>
+                    <Style Selector="Button">
+                        <Setter Property="HorizontalAlignment" Value="Center" />
+                        <Setter Property="VerticalAlignment" Value="Center" />
+                    </Style>
+                    <Style Selector="Button TextBlock">
+                        <Setter Property="HorizontalAlignment" Value="Center" />
+                        <Setter Property="VerticalAlignment" Value="Center" />
+                    </Style>
+                </Grid.Styles>
+                
+                <Button Command="{Binding TriggerNoteClick}" CommandParameter="90"
+                        Margin="0 0 360 200">
+                    <Button.Template>
+                        <ControlTemplate>
+                            <Grid>
+                                <Ellipse Fill="Yellow" Width="88" Height="88" />
+                                <TextBlock Text="cr" />
+                            </Grid>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+                <Button Command="{Binding TriggerNoteClick}" CommandParameter="90"
+                        Margin="0 0 260 100">
+                    <Button.Template>
+                        <ControlTemplate>
+                            <Grid>
+                                <Ellipse Fill="Green" Width="88" Height="88" />
+                                <TextBlock Text="hh" />
+                            </Grid>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+
+                <Button Command="{Binding TriggerNoteClick}" CommandParameter="36"
+                        VerticalAlignment="Bottom">
+                    <Button.Template>
+                        <ControlTemplate>
+                            <Grid>
+                                <Ellipse Fill="Red" Width="158" Height="158" />
+                                <TextBlock Text="k" />
+                            </Grid>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+                
+                <Button Command="{Binding TriggerNoteClick}" CommandParameter="40"
+                        Margin="0 40 140 0">
+                    <Button.Template>
+                        <ControlTemplate>
+                            <Grid>
+                                <Ellipse Fill="Cyan" Width="128" Height="128" />
+                                <TextBlock Text="sn" />
+                            </Grid>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+            </Grid>
+
+        </StackPanel>
+    </Grid>
+</UserControl>

@@ -1,0 +1,126 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:drumMachine="clr-namespace:DrumMachine"
+        xmlns:ui="clr-namespace:DrumMachine.UI"
+        xmlns:views="clr-namespace:DrumMachine.Views"
+        xmlns:converters="clr-namespace:DrumMachine.Converters"
+        xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+        xmlns:design="clr-namespace:DrumMachine.Design"
+        mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="650"
+        x:Class="DrumMachine.MainWindow"
+        x:DataType="drumMachine:BeatMachineViewModel"
+        Title="DrumMachine">
+    <Design.DataContext>
+        <design:DesignBeatMachineViewModel />
+    </Design.DataContext>
+    <Window.Resources>
+        <converters:IntPlusOneConverter x:Key="IntPlusOneConverter" />
+    </Window.Resources>
+    <DockPanel>
+        <DockPanel DockPanel.Dock="Top">
+            <ToggleButton DockPanel.Dock="Left" IsChecked="{Binding BeatMachine.IsPlaying}" Margin="8">
+                <DockPanel>
+                    <avalonia:MaterialIcon Kind="PlayArrow" Width="64" Height="64" />
+                </DockPanel>
+            </ToggleButton>
+            <StackPanel Orientation="Horizontal" DockPanel.Dock="Right" VerticalAlignment="Center" Margin="8">
+                <TextBox Text="{Binding BeatMachine.BeatsPerMinute}"
+                         BorderThickness="0"
+                         FontSize="34"
+                         Padding="0" />
+                <TextBlock Text="bpm" HorizontalAlignment="Center" />
+            </StackPanel>
+            <TextBlock
+                Text="{Binding CurrentBeatCount, Converter={StaticResource IntPlusOneConverter}, FallbackValue=15}"
+                FontSize="46"
+                FontWeight="Bold"
+                HorizontalAlignment="Center"
+                Margin="0 20" />
+
+        </DockPanel>
+        <!-- <TextBlock Text="{Binding Count, Converter={StaticResource IntPlusOneConverter}, FallbackValue=4}" -->
+        <!--            FontSize="46" -->
+        <!--            FontWeight="Bold" -->
+        <!--            HorizontalAlignment="Center" -->
+        <!--            Margin="0 20" /> -->
+
+        <Grid RowDefinitions="*,1,*">
+            <ScrollViewer HorizontalScrollBarVisibility="Visible">
+
+                <StackPanel>
+                    <ItemsControl ItemsSource="{Binding BeatGrid}" Margin="200 0 0 0">
+                        <ItemsControl.Styles>
+                            <Style Selector="Button">
+                                <Setter Property="Height" Value="50" />
+                                <Setter Property="Width" Value="200" />
+                            </Style>
+                            <Style Selector="Button.IsActiveBeat">
+                                <Setter Property="Background" Value="Red" />
+                            </Style>
+                        </ItemsControl.Styles>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <UniformGrid Rows="1" HorizontalAlignment="Center" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Button Classes.IsActiveBeat="{Binding}"></Button>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    <ItemsControl ItemsSource="{Binding SubdivisionBeatGrid}" Margin="200 0 0 0">
+                        <ItemsControl.Styles>
+                            <Style Selector="Button">
+                                <Setter Property="Height" Value="50" />
+                                <Setter Property="Width" Value="50" />
+                            </Style>
+                            <Style Selector="Button.IsActiveBeat">
+                                <Setter Property="Background" Value="Red" />
+                            </Style>
+                        </ItemsControl.Styles>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <UniformGrid Rows="1" HorizontalAlignment="Center" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Button Classes.IsActiveBeat="{Binding}"></Button>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
+                    <ItemsControl ItemsSource="{Binding InstrumentTracks}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <ui:InstrumentTrackView />
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+
+            </ScrollViewer>
+
+            <GridSplitter
+                Grid.Row="1"
+                Margin="-3,0"
+                HorizontalAlignment="Stretch"
+                Background="#808080"
+                BorderBrush="Transparent"
+                BorderThickness="3,0"
+                ZIndex="9999" />
+
+            <DockPanel Grid.Row="2" DockPanel.Dock="Bottom">
+                <views:ConfigView DataContext="{Binding ConfigViewModel}" />
+                <Viewbox>
+                    <views:VirtualDrumKit />
+                </Viewbox>
+            </DockPanel>
+
+        </Grid>
+
+    </DockPanel>
+</Window>
